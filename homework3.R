@@ -2,6 +2,7 @@ file_path<-"/home/appertjt/Documents/Grad School/econometrics fall/Code/homework
 
 library(foreign)
 library("readstata13")
+library(ggpredict)
 
 #read the file in
 
@@ -26,8 +27,9 @@ summary(df1.d)
 df1.d<-df1.d[df1.d["incwage"]<999999,]  #filtering out 
 df1.d<-df1.d[df1.d['incwage']>0,]  #wages >0
 df1.d<-df1.d[df1.d["age"]>15,]  #older than 15
-df1.d<-df1.d[df1.d["age"}<66,]  #younger than 66
+df1.d<-df1.d[df1.d["age"]<66,]  #younger than 66
 df1.d["uhrswork"]<-df1.d["uhrswork"]*50
+df1.d<-df1.d[df1.d["uhrswork"]>1000,]
 df1.d<-df1.d[df1.d["uhrswork"]>1000,]
 
 summary(df1.d)
@@ -38,9 +40,11 @@ summary(df1.d)
 ###############################
 
 
-#run a 4th order linear regression
-reg_age = lm(incwage ~ poly(age, 4), data=df1.d)
+#run a 2nd order linear regression
+reg_age = lm(incwage ~educ + marst + poly(age, 2), data=df1.d)
 summary(reg_age)
+
+
 
 
 
