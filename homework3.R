@@ -1,17 +1,13 @@
-file_path<-"/home/appertjt/Documents/Grad School/econometrics fall/Code/homework3/ECON-741-HW-3/CH6_HW-1.dta"
-
-library(foreign)
-library("readstata13")
-library(ggpredict)
+file_path<-"/home/appertjt/Documents/Grad School/econometrics/Code/homework3/ECON-741-HW-3/munged_data.csv"
 
 #read the file in
 
-data<-read.dta13(file_path)
+data<-read.csv(file_path)
 
 #load data into a dataframe
 
 df1.d<-data.frame(data)
-df1.d
+
 
 #convert all columns to numeric values
 df1.d<-transform(df1.d, incwage=as.numeric(incwage), uhrswork=as.numeric(uhrswork), age=as.numeric(age))
@@ -20,32 +16,34 @@ df1.d<-transform(df1.d, incwage=as.numeric(incwage), uhrswork=as.numeric(uhrswor
 
 summary(df1.d)
 
-#Need the following for the polynomials question:
-#  Age >15 and < 66
-#  Earnings >0
-#  Hours>1000
-df1.d<-df1.d[df1.d["incwage"]<999999,]  #filtering out 
-df1.d<-df1.d[df1.d['incwage']>0,]  #wages >0
-df1.d<-df1.d[df1.d["age"]>15,]  #older than 15
-df1.d<-df1.d[df1.d["age"]<66,]  #younger than 66
-df1.d["uhrswork"]<-df1.d["uhrswork"]*50
-df1.d<-df1.d[df1.d["uhrswork"]>1000,]
-df1.d<-df1.d[df1.d["uhrswork"]>1000,]
-
-summary(df1.d)
-
-###############################
-### Run the first regression###
-### Age on Wages###############
-###############################
-
+#get a column for age squared
+df1.d<-transform(df1.d, age2=age^2)
+#assign the independent and dependent variables
+y<-as.matrix(df1.d["incwage"])
+x1<-as.matrix(subset(df1.d, select=c("age", "age2")))
 
 #run a 2nd order linear regression
-reg_age = lm(incwage ~educ + marst + poly(age, 2), data=df1.d)
-summary(reg_age)
+#create a column of constants
+#set up the constant
+cons<-matrix(nrow=nrow(x1), ncol=1,1)
+xmat<-cbind(x1, cons)
 
+#find betaHat
 
+betaHat<-(solve(t(xmat)%*%(xmat)))%*%(t(xmat)%*%y)
 
+#find yhat
+yHat=xmat%*%betaHat
 
+#find the residuals
+epsilonHat=y-yHat
+
+#find sigmaHat
+sigmaHat<-(t(epsilonHat)%*%epsilonHat)/(nrow(xmat)-ncol(xmat))
+
+#get the standard errors
+se=sigmaHat[1]*solve(t(xmat)%*%(xmat))
+print (solve(t(xmat)%*%(xmat)))
+print(sqrt(diag(se)))
 
 
