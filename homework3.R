@@ -56,19 +56,23 @@ diag(I)<-omegaDiag
 #get omegaW
 omegaW<-I
 
-
 #Now get the (X'X)^-1 term
 
 z<-solve(t(xmat)%*%(xmat))
 
 varBeta=z%*%t(xmat)%*%omegaW%*%xmat%*%(z)
 
+#adjust varbeta for degrees of freedom:
+
+varBeta1<-nrow(xmat)/(nrow(xmat)-ncol(xmat))*varBeta
 print (varBeta)
 
+
 print(sqrt(diag(varBeta)))
+print(sqrt(diag(varBeta1)))
 
 #Graph the residuals against Y to show heteroscedasticity
 
-qplot(x, epsilonHat, xlab="Age", ylab="Residuals")
+qplot(yHat, omegaDiag, xlab="Predicted Y", ylab="Residuals Squared")
 
 
