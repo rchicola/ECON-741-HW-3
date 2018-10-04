@@ -1,3 +1,7 @@
+
+library('Matrix')
+library(ggplot2)
+
 file_path<-"/home/appertjt/Documents/Grad School/econometrics/Code/homework3/ECON-741-HW-3/munged_data.csv"
 
 #read the file in
@@ -38,12 +42,33 @@ yHat=xmat%*%betaHat
 #find the residuals
 epsilonHat=y-yHat
 
-#find sigmaHat
-sigmaHat<-(t(epsilonHat)%*%epsilonHat)/(nrow(xmat)-ncol(xmat))
+#find omegaH.
+#We can't do this explicitly because of the size of the matrix so we'll cheat.
+#Remember, we're assuming off diagonal is zero.  So instead of calculating the whole matrix
+#we'll calculate the diagonal and then multiply it by I.
+omegaDiag<-epsilonHat^2
 
-#get the standard errors
-se=sigmaHat[1]*solve(t(xmat)%*%(xmat))
-print (solve(t(xmat)%*%(xmat)))
-print(sqrt(diag(se)))
+#Now build a sparse matrix to get around the size of the matrix memory problem
+I<-Matrix(0, nrow=nrow(omegaDiag), ncol= nrow(omegaDiag), sparse=TRUE)
+#fill the diagonal
+diag(I)<-omegaDiag
+
+#get omegaW
+omegaW<-I
+
+
+#Now get the (X'X)^-1 term
+
+z<-solve(t(xmat)%*%(xmat))
+
+varBeta=z%*%t(xmat)%*%omegaW%*%xmat%*%(z)
+
+print (varBeta)
+
+print(sqrt(diag(varBeta)))
+
+#Graph the residuals against Y to show heteroscedasticity
+
+qplot(x, epsilonHat, xlab="Age", ylab="Residuals")
 
 
