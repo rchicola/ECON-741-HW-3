@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+\begin{table}[tbp] \centering
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\caption{Interaction Regression}
+\begin{tabularx}{\textwidth}{lCCCC}
+
+\toprule
+{var}&{coef}&{stderr}&{N}&{r2} \tabularnewline
+\midrule\addlinespace[1.5ex]
+age&-6089.086&1847.886&1331847&.0910964 \tabularnewline
+age2&607.7899&100.9341&1331847&.0910964 \tabularnewline
+age3&-17.30284&2.641194&1331847&.0910964 \tabularnewline
+age4&.2097509&.0332475&1331847&.0910964 \tabularnewline
+age5&-.0009531&.0001617&1331847&.0910964 \tabularnewline
+NM&18866.36&514.2944&1331847&.0910964 \tabularnewline
+CM&16968.16&162.5083&1331847&.0910964 \tabularnewline
+ageNM&-417.7659&12.14724&1331847&.0910964 \tabularnewline
+\_cons&-11567.8&12931.09&1331847&.0910964 \tabularnewline
+\bottomrule \addlinespace[1.5ex]
+
+\end{tabularx}
+\end{table}
+\end{document}

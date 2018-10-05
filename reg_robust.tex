@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+\begin{table}[tbp] \centering
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\caption{Robust Regression}
+\begin{tabularx}{\textwidth}{lCCCC}
+
+\toprule
+{var}&{coef}&{stderr}&{N}&{r2} \tabularnewline
+\midrule\addlinespace[1.5ex]
+age&5742.326&23.62513&1331847&.0777715 \tabularnewline
+age2&-56.60501&.302465&1331847&.0777715 \tabularnewline
+\_cons&-78621.34&399.5724&1331847&.0777715 \tabularnewline
+\bottomrule \addlinespace[1.5ex]
+
+\end{tabularx}
+\end{table}
+\end{document}

@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+\begin{table}[tbp] \centering
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\caption{Linear-Log Regression}
+\begin{tabularx}{\textwidth}{lCCCC}
+
+\toprule
+{var}&{coef}&{stderr}&{N}&{r2} \tabularnewline
+\midrule\addlinespace[1.5ex]
+0b.educ&0&0&1331847&.1458944 \tabularnewline
+1.educ&-2399.32&1026.261&1331847&.1458944 \tabularnewline
+2.educ&-2698.808&667.6634&1331847&.1458944 \tabularnewline
+3.educ&-4883.14&737.1592&1331847&.1458944 \tabularnewline
+4.educ&-7426.246&687.9224&1331847&.1458944 \tabularnewline
+5.educ&-9334.577&645.1861&1331847&.1458944 \tabularnewline
+6.educ&5257.943&539.4581&1331847&.1458944 \tabularnewline
+7.educ&8886.766&546.7324&1331847&.1458944 \tabularnewline
+8.educ&15787.23&556.1182&1331847&.1458944 \tabularnewline
+10.educ&39498.69&542.6752&1331847&.1458944 \tabularnewline
+11.educ&70093.13&549.3376&1331847&.1458944 \tabularnewline
+\_cons&29815.12&532.5793&1331847&.1458944 \tabularnewline
+\bottomrule \addlinespace[1.5ex]
+
+\end{tabularx}
+\end{table}
+\end{document}

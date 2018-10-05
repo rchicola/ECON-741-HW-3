@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[margin=1in]{geometry}
+\begin{document}
+
+\begin{table}[tbp] \centering
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\caption{Poly Regression}
+\begin{tabularx}{\textwidth}{lCCCC}
+
+\toprule
+{var}&{coef}&{stderr}&{N}&{r2} \tabularnewline
+\midrule\addlinespace[1.5ex]
+age&-15531.65&1854.559&1331847&.0781559 \tabularnewline
+age2&1094.551&101.1481&1331847&.0781559 \tabularnewline
+age3&-29.11097&2.645224&1331847&.0781559 \tabularnewline
+age4&.3464887&.0332961&1331847&.0781559 \tabularnewline
+age5&-.0015639&.000162&1331847&.0781559 \tabularnewline
+\_cons&67744.05&13003.67&1331847&.0781559 \tabularnewline
+\bottomrule \addlinespace[1.5ex]
+
+\end{tabularx}
+\end{table}
+\end{document}
