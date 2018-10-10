@@ -1,6 +1,13 @@
+clear all
+capture log close
+set more off
+
+log using hw3.log, replace
+
 *Call the directory where your file is located. cd command. Replace the portion
 *in-quotes with the location you saved the HW file on your computer.
-cd "C:\Users\Spong\Desktop\UNR Classes\Fall 2018\Applied Econometrics\HW\HW 3"
+*cd "C:\Users\Spong\Desktop\UNR Classes\Fall 2018\Applied Econometrics\HW\HW 3"
+cd "/home/appertjt/Documents/Grad School/econometrics/Code/homework3/ECON-741-HW-3"
 use CH6_HW-1
 
 sum
@@ -337,4 +344,4 @@ regress incwage age age2, vce(robust)
 *list
 *texsave using "reg_robust", title(Robust Regression)
 
-
+log close
