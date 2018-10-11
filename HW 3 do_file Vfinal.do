@@ -1,8 +1,4 @@
-clear all
-capture log close
-set more off
 
-log using hw3.log, replace
 
 *Call the directory where your file is located. cd command. Replace the portion
 *in-quotes with the location you saved the HW file on your computer.
@@ -176,19 +172,19 @@ test
 
 
 
-*gen NevRMar=1 if marst==6
-*replace NevRMar=0 if marst==5 | marst==5 |marst==3 | marst==2 |marst==1
-*gen CurrMar=1 if marst==1 | marst==2
-*replace CurrMar=0 if marst==5 | marst==4 | marst==3 
-*gen FormMar=1 if marst==3 | marst==4 | marst==5
-*replace FormMar=0 if marst==1 | marst==2
+gen NevRMar=1 if marst==6
+replace NevRMar=0 if marst==5 | marst==5 |marst==3 | marst==2 |marst==1
+gen CurrMar=1 if marst==1 | marst==2
+replace CurrMar=0 if marst==5 | marst==4 | marst==3 
+gen FormMar=1 if marst==3 | marst==4 | marst==5
+replace FormMar=0 if marst==1 | marst==2
 
 
 ************************************
 *PART A Put all three indicators in your model
 ************************************
 
-*reg incwage age age2 age3 age4 age5 NevRMar CurrMar FormMar
+reg incwage NevRMar CurrMar FormMar
 ***Result is "no observations r(2000)"; We cannot put all three dummies in the 
 *model because there would be perfect multicolinearity. In matrix perspective
 *the sum of the category dummies for each row equals the intercept value of that row.
@@ -221,7 +217,7 @@ reg incwage age age2 age3 age4 age5 NM CM FM
 *more quickly with age than people who were never married.
 **************************************
 
-*reg incwage age age2 age3 age4 age5 NevRMar CurrMar
+reg incwage age age2 age3 age4 age5 NevRMar CurrMar
 ***Result is "no observations r(2000)" so something wrong with dummies SEE REDO Dummies
 
 reg incwage age age2 age3 age4 age5 NM CM 
@@ -253,18 +249,36 @@ reg incwage age age2 age3 age4 age5 NM CM ageNM
 *************************************************************************
 *Problem 3
 *************************************************************************
+*Create a variable edY for years of education
+
+tab educ
+tab educ, nolab
+
+gen edY=0 if educ==0
+replace edY=4 if educ ==1
+replace edY=9 if educ ==2
+replace edY=10 if educ ==3
+replace edY=11 if educ ==4
+replace edY=12 if educ==5
+replace edY=13 if educ ==6
+replace edY=14 if educ==7
+replace edY=15 if educ==8
+replace edY=17 if educ==9
+replace edY=18 if educ==10
 
 
+/*
 *Construct Var. that is years of education
 ****If 
 xi [, i noomit] educ
 *xi: logistic outcome incwage  i.educ
+*/
 
 **
 **********************
 *Part A
 ************************
-reg incwage i.educ
+reg incwage edY
 
 *regsave 
 *list
@@ -274,7 +288,7 @@ reg incwage i.educ
 *PART B
 ************************
 gen LNincwage=ln(incwage)
-reg LNincwage i.educ
+reg LNincwage edY
 
 *regsave 
 *list
@@ -284,8 +298,8 @@ reg LNincwage i.educ
 *Part C
 ***************************
 ***Do we have to do some sort of fequency weight?
-gen LNeduc=ln(educ)
-reg incwage LNeduc
+gen LNedY=ln(edY)
+reg incwage LNedY
 
 *regsave 
 *list
@@ -297,7 +311,7 @@ reg incwage LNeduc
 ***************************
 *PART D
 ***************************
-*reg LNincwage  LNeduc
+reg LNincwage  LNedY
 
 *regsave 
 *list
